@@ -278,127 +278,130 @@ const SocialMediaAddictionPredictor = () => {
   const result = showResult ? getAddictionLevel(addictionScore) : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl">
-              <Brain className="text-white" size={28} />
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-t-3xl shadow-2xl p-6 sm:p-8 border-b border-gray-200 backdrop-blur-sm relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-200/30 to-cyan-200/30 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-teal-200/30 to-blue-200/30 rounded-full blur-3xl -z-10"></div>
+          <div className="flex items-center gap-4 relative">
+            <div className="bg-gradient-to-br from-emerald-500 to-cyan-600 p-4 rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <Brain className="text-white" size={32} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Social Media Addiction Predictor</h1>
-              <p className="text-sm text-gray-600">ML-Powered Assessment Tool</p>
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Social Media Addiction Predictor</h1>
+              <p className="text-sm sm:text-base text-gray-600 font-medium mt-1">ML-Powered Assessment Tool</p>
             </div>
           </div>
         </div>
 
-        {/* Chat Area */}
-        <div className="bg-white shadow-lg p-6 min-h-96 max-h-96 overflow-y-auto">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`mb-4 flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-3 rounded-2xl ${
-                msg.type === 'user' 
-                  ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-br-none' 
-                  : 'bg-gray-100 text-gray-800 rounded-bl-none'
-              }`}>
-                {msg.type === 'bot' && (
-                  <MessageCircle size={16} className="inline mr-2 mb-1" />
-                )}
-                {msg.text}
+        <div className="bg-gradient-to-b from-white to-gray-50 shadow-2xl p-6 sm:p-8 min-h-96 max-h-96 overflow-y-auto relative">
+          <div className="space-y-4">
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} ${msg.type === 'bot' ? 'message-bot' : 'message-user'}`}>
+                <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-5 py-3.5 rounded-2xl shadow-md transition-all duration-300 hover:shadow-lg ${
+                  msg.type === 'user'
+                    ? 'bg-gradient-to-br from-emerald-500 to-cyan-600 text-white rounded-br-none'
+                    : 'bg-gradient-to-br from-gray-100 to-gray-50 text-gray-800 rounded-bl-none border border-gray-200'
+                }`}>
+                  {msg.type === 'bot' && (
+                    <MessageCircle size={18} className="inline mr-2 mb-1 text-emerald-600" />
+                  )}
+                  <span className="leading-relaxed">{msg.text}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
 
-          {/* Result Display */}
           {showResult && result && (
-            <div className={`mt-6 p-6 rounded-2xl border-2 ${result.bgColor}`}>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-gray-800">ML Prediction Results</h3>
-                <div className={`text-3xl font-bold ${result.color}`}>
+            <div className={`mt-8 p-6 sm:p-8 rounded-3xl border-2 shadow-xl message-enter ${result.bgColor} backdrop-blur-sm`}>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-gray-900">ML Prediction Results</h3>
+                <div className={`text-4xl sm:text-5xl font-bold ${result.color} transform hover:scale-110 transition-transform duration-300`}>
                   {addictionScore}/10
                 </div>
               </div>
-              
-              <div className="mb-4">
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">Addiction Level:</span>
-                  <span className={`text-sm font-bold ${result.color}`}>{result.level}</span>
+
+              <div className="mb-6">
+                <div className="flex justify-between mb-3">
+                  <span className="text-sm font-bold text-gray-800">Addiction Level:</span>
+                  <span className={`text-sm font-bold ${result.color} px-3 py-1 rounded-full bg-white shadow-sm`}>{result.level}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div 
-                    className={`h-3 rounded-full transition-all duration-1000 ${
-                      addictionScore >= 9 ? 'bg-red-500' :
-                      addictionScore >= 7 ? 'bg-orange-500' :
-                      addictionScore >= 5 ? 'bg-yellow-500' :
-                      addictionScore >= 4 ? 'bg-blue-500' : 'bg-green-500'
+                <div className="w-full bg-gray-300 rounded-full h-4 shadow-inner overflow-hidden">
+                  <div
+                    className={`h-4 rounded-full transition-all duration-1000 ease-out shadow-lg ${
+                      addictionScore >= 9 ? 'bg-gradient-to-r from-red-500 to-red-600' :
+                      addictionScore >= 7 ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                      addictionScore >= 5 ? 'bg-gradient-to-r from-yellow-500 to-yellow-600' :
+                      addictionScore >= 4 ? 'bg-gradient-to-r from-blue-500 to-blue-600' : 'bg-gradient-to-r from-green-500 to-green-600'
                     }`}
                     style={{ width: `${addictionScore * 10}%` }}
                   />
                 </div>
               </div>
 
-              <p className="text-gray-700 mb-4">{result.description}</p>
+              <p className="text-gray-800 mb-6 leading-relaxed text-base">{result.description}</p>
 
-              <div className="bg-white bg-opacity-60 rounded-lg p-4">
-                <h4 className="font-bold text-gray-800 mb-2">Personalized Recommendations:</h4>
-                <ul className="space-y-2">
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-5 shadow-md border border-white mb-4">
+                <h4 className="font-bold text-gray-900 mb-3 text-lg">Personalized Recommendations:</h4>
+                <ul className="space-y-3">
                   {result.recommendations.map((rec, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-1">•</span>
-                      <span className="text-gray-700">{rec}</span>
+                    <li key={idx} className="flex items-start gap-3 group">
+                      <span className="text-emerald-600 mt-1 text-xl group-hover:scale-125 transition-transform duration-200">•</span>
+                      <span className="text-gray-700 leading-relaxed">{rec}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-4 p-4 bg-white bg-opacity-60 rounded-lg">
-                <h4 className="font-bold text-gray-800 mb-2">Your Profile Summary:</h4>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div><span className="font-semibold">Daily Usage:</span> {userData.dailyUsage}h</div>
-                  <div><span className="font-semibold">Sleep:</span> {userData.sleepHours}h</div>
-                  <div><span className="font-semibold">Mental Health:</span> {userData.mentalHealth}/10</div>
-                  <div><span className="font-semibold">Platform:</span> {userData.platform}</div>
+              <div className="p-5 bg-white/70 backdrop-blur-sm rounded-2xl shadow-md border border-white">
+                <h4 className="font-bold text-gray-900 mb-3 text-lg">Your Profile Summary:</h4>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-gray-50 p-3 rounded-lg"><span className="font-bold text-gray-800">Daily Usage:</span> <span className="text-gray-700">{userData.dailyUsage}h</span></div>
+                  <div className="bg-gray-50 p-3 rounded-lg"><span className="font-bold text-gray-800">Sleep:</span> <span className="text-gray-700">{userData.sleepHours}h</span></div>
+                  <div className="bg-gray-50 p-3 rounded-lg"><span className="font-bold text-gray-800">Mental Health:</span> <span className="text-gray-700">{userData.mentalHealth}/10</span></div>
+                  <div className="bg-gray-50 p-3 rounded-lg"><span className="font-bold text-gray-800">Platform:</span> <span className="text-gray-700">{userData.platform}</span></div>
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* Input Area */}
-        <div className="bg-white rounded-b-2xl shadow-lg p-4 border-t">
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-b-3xl shadow-2xl p-5 sm:p-6 border-t border-gray-200">
           {!showResult ? (
-            <form onSubmit={handleSubmit} className="flex gap-2">
+            <form onSubmit={handleSubmit} className="flex gap-3">
               <input
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder="Type your answer..."
-                className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 transition-colors"
+                className="flex-1 px-5 py-4 border-2 border-gray-300 rounded-2xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all duration-200 text-gray-800 placeholder-gray-400 shadow-sm"
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all flex items-center gap-2 font-semibold"
+                className="bg-gradient-to-br from-emerald-500 to-cyan-600 text-white px-6 sm:px-8 py-4 rounded-2xl hover:from-emerald-600 hover:to-cyan-700 transition-all duration-200 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 <Send size={20} />
-                Send
+                <span className="hidden sm:inline">Send</span>
               </button>
             </form>
           ) : (
             <button
               onClick={resetChat}
-              className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all flex items-center justify-center gap-2 font-semibold"
+              className="w-full bg-gradient-to-br from-emerald-500 to-cyan-600 text-white px-6 py-4 rounded-2xl hover:from-emerald-600 hover:to-cyan-700 transition-all duration-200 flex items-center justify-center gap-3 font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
             >
-              <RotateCcw size={20} />
+              <RotateCcw size={22} />
               Start New Assessment
             </button>
           )}
         </div>
 
-        {/* Info Footer */}
-        <div className="mt-4 text-center text-sm text-gray-600 bg-white rounded-xl p-4 shadow">
-          <p>🤖 This app uses machine learning trained on 705 student records to predict addiction levels.</p>
-          <p className="mt-1">Model accuracy based on patterns: Daily usage, sleep, mental health, and academic impact.</p>
+        <div className="mt-6 text-center bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 shadow-xl border border-gray-200">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Brain size={20} className="text-emerald-600" />
+            <p className="text-sm font-semibold text-gray-800">Machine Learning Model</p>
+          </div>
+          <p className="text-sm text-gray-600 leading-relaxed">This app uses machine learning trained on 705 student records to predict addiction levels.</p>
+          <p className="text-xs text-gray-500 mt-2">Model accuracy based on patterns: Daily usage, sleep, mental health, and academic impact.</p>
         </div>
       </div>
     </div>
